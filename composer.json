@@ -1,0 +1,20 @@
+{
+  "name": "itvisionsy/laravel-modules",
+  "description": "Laravel 5.1 library to allow modules structure. Each module can have its routes, controllers, views, config, ...",
+  "type": "library",
+  "require": {
+    "laravel/laravel": "5.1.*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Muhannad Shelleh",
+      "email": "muhannad.shelleh@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ItvisionSy\\Laravel\\Modules\\": "src"
+    }
+  }
+}
