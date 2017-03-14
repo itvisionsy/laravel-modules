@@ -3,7 +3,7 @@
   "description": "Laravel 5.1 library to allow modules structure. Each module can have its routes, controllers, views, config, ...",
   "type": "library",
   "require": {
-    "laravel/laravel": "5.1.*"
+    "laravel/framework": "5.1.*"
   },
   "license": "MIT",
   "authors": [
