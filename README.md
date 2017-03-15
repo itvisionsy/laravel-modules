@@ -1,6 +1,9 @@
 # laravel-modules
 Modules management library for laravel 5.1
 
+[![Packagist](https://img.shields.io/packagist/v/itvisionsy/laravel-modules.svg)]()
+[![license](https://img.shields.io/github/license/itvisionsy/laravel-modules.svg)]()
+
 Allows modules structure of your project. Each module can have its views, config, routes, controllers, ...
 
 ## Installation
