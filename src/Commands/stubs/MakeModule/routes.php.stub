@@ -1,0 +1,8 @@
+<?php
+
+$module = {{namespace}}\{{id}}\{{class}}::make();
+
+//Route::get($module->getRoutePath('/'), [
+//    'as' => $module->getRouteName('index'),
+//    'uses' => App\Modules\TestModule\Http\Controllers\WelcomeController::class . '@index'
+//]);

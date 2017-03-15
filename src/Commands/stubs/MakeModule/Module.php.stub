@@ -1,0 +1,15 @@
+<?php
+
+namespace {{namespace}}\{{id}};
+
+use ItvisionSy\Laravel\Modules\Module as BaseModule;
+
+class {{class}} extends BaseModule
+{
+
+    protected $moduleId='{{id}}';
+    protected $moduleName='{{name}}';
+    protected $moduleRouteNamePrefix='{{url_name}}';
+    protected $moduleUrlPrefix='{{url_name}}';
+
+}

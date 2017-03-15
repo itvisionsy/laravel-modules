@@ -8,7 +8,15 @@
 
 namespace ItvisionSy\Laravel\Modules;
 
-class SystemModule extends Module
+abstract class SystemModule extends Module
 {
+
+    /**
+     * @return bool
+     */
+    public function isSystemModule()
+    {
+        return true;
+    }
 
 }
