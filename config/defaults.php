@@ -30,7 +30,7 @@ return [
      * If you want to use a closure, in your kernel.php call the
      * \ItvisionSy\Laravel\Modules\Modules::setStoreHandler(closure())
      */
-    'store_handler' => \ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler::class,
+    'store_handler' => \ItvisionSy\Laravel\Modules\StoreHandlers\DummyStoreHandler::class,
     /*
      * If you do not provide a store handler, then the following connection will be used to store the settings for you.
      * You will need to initiate the required table by issuing the modules:db:init command.
@@ -44,7 +44,7 @@ return [
     /*
      * True will make the default status of the modules is enabled if the store can not find an entry for the module
      */
-    'modules_enabled_by_default' => false,
+    'modules_enabled_by_default' => true,
 
 
     /**-----------------------------------------------------------
