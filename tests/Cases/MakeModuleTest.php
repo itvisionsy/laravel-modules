@@ -10,6 +10,7 @@ class MakeModuleTest extends LaravelModulesTestCase
     public function testSimpleCommand()
     {
         $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module"]);
+        $this->loadModuleFiles("Test");
         $this->assertDirectoryExists($this->modulesPath());
         $this->assertDirectoryExists($this->modulesPath('Test/'));
         $this->assertDirectoryExists($this->modulesPath('Test/Http/'));
@@ -28,6 +29,7 @@ class MakeModuleTest extends LaravelModulesTestCase
     public function testCompoundName()
     {
         $this->artisan('modules:make', ["id" => "TestModule", "name" => "Test Module"]);
+        $this->loadModuleFiles("TestModule");
         $this->assertDirectoryExists($this->modulesPath('TestModule/'));
         $this->assertFileExists($this->modulesPath('TestModule/' . config('modules.class_name') . '.php'));
         $this->assertTrue(class_exists(\App\Modules\TestModule\Module::class));
@@ -39,6 +41,7 @@ class MakeModuleTest extends LaravelModulesTestCase
     public function testCustomUrl()
     {
         $this->artisan('modules:make', ["id" => "TestModuleWithUrl", "name" => "Test Module", "--url" => "test-module"]);
+        $this->loadModuleFiles("TestModuleWithUrl");
         $this->assertDirectoryExists($this->modulesPath('TestModuleWithUrl/'));
         $this->assertFileExists($this->modulesPath('TestModuleWithUrl/' . config('modules.class_name') . '.php'));
         $this->assertTrue(class_exists(\App\Modules\TestModuleWithUrl\Module::class));
