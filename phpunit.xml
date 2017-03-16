@@ -10,15 +10,13 @@
          stopOnFailure="false">
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory suffix="Test.php">./tests/cases</directory>
+            <directory suffix="Test.php">./tests/Cases</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
         </whitelist>
-    </filter>
-    <filter>
         <blacklist>
             <directory>./vendor</directory>
             <directory>./config</directory>
