@@ -10,9 +10,12 @@ namespace ItvisionSy\Laravel\Modules\StoreHandlers;
 
 use DB;
 use ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface;
+use ItvisionSy\Laravel\Modules\Traits\StaticFactory;
 
 class SimpleDbStoreHandler implements KeyValueStoreInterface
 {
+
+    use StaticFactory;
 
     protected static $tableName = 'modules_storage';
 

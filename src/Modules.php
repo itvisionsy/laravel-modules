@@ -33,7 +33,7 @@ class Modules implements StaticAndInstanceAccessInterface
     public static function grantAccess()
     {
         return [
-            'all', 'find', 'system', 'normal', 'enabled', 'disabled', 'getStoreHandler', 'setStoreHandler'
+            'get', 'all', 'find', 'enabled', 'disabled', 'getStoreHandler', 'setStoreHandler'
         ];
     }
 
@@ -43,7 +43,7 @@ class Modules implements StaticAndInstanceAccessInterface
      */
     public static function isModuleEnabled(Module $module)
     {
-        return \App::runningInConsole() ? config('modules.modules_enabled_by_default', 0) : !!static::getStoredValue("module_is_enabled|" . $module->id(), config('modules.modules_enabled_by_default', 0));
+        return (bool)@static::getStoredValue("module_is_enabled|" . $module->id(), config('modules.modules_enabled_by_default', 0));
     }
 
     /**
@@ -52,7 +52,11 @@ class Modules implements StaticAndInstanceAccessInterface
      */
     public static function disableModule(Module $module)
     {
-        return static::setStoredValue("module_is_enabled|" . $module->id(), 0);
+        static::setStoredValue("module_is_enabled|" . $module->id(), 0);
+        if (array_key_exists($module->id(), static::$filtered['enabled'])) {
+            unset(static::$filtered['enabled'][$module->id()]);
+        }
+        static::$filtered['disabled'][$module->id()] = $module;
     }
 
     /**
@@ -61,7 +65,11 @@ class Modules implements StaticAndInstanceAccessInterface
      */
     public static function enableModule(Module $module)
     {
-        return static::setStoredValue("module_is_enabled|" . $module->id(), 1);
+        static::setStoredValue("module_is_enabled|" . $module->id(), 1);
+        if (array_key_exists($module->id(), static::$filtered['disabled'])) {
+            unset(static::$filtered['disabled'][$module->id()]);
+        }
+        static::$filtered['enabled'][$module->id()] = $module;
     }
 
     /**
@@ -139,9 +147,7 @@ class Modules implements StaticAndInstanceAccessInterface
         $modules = [];
         $filtered = [
             'enabled' => [],
-            'disabled' => [],
-            'system' => [],
-            'normal' => [],
+            'disabled' => []
         ];
         $modulesPath = static::modulesDirectory();
         if (is_dir($modulesPath)) {
@@ -178,13 +184,6 @@ class Modules implements StaticAndInstanceAccessInterface
                 //add the module
                 $modules[$module->id()] = $module;
 
-                //classify system/normal modules
-                if ($module->isSystemModule()) {
-                    $filtered['system'][$module->id()] = $module;
-                } else {
-                    $filtered['normal'][$module->id()] = $module;
-                }
-
                 //classify enabled/disabled modules
                 if ($module->isEnabled()) {
                     $filtered['enabled'][$module->id()] = $module;
@@ -204,24 +203,6 @@ class Modules implements StaticAndInstanceAccessInterface
     protected function all()
     {
         return static::$modules ?: $this->refreshModules();
-    }
-
-    /**
-     * @return Module[]|array
-     */
-    protected function system()
-    {
-        $this->all();
-        return @static::$filtered['system'] ?: [];
-    }
-
-    /**
-     * @return Module[]|array
-     */
-    protected function normal()
-    {
-        $this->all();
-        return @static::$filtered['normal'] ?: [];
     }
 
     /**
@@ -265,5 +246,7 @@ class Modules implements StaticAndInstanceAccessInterface
     {
         return config('modules.class_name', 'Module');
     }
+
+    //@TODO:Move store handler methods to separate class ModulesStoreHandler to maintain single responsibility
 
 }

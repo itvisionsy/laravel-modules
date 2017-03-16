@@ -8,6 +8,7 @@
 
 namespace ItvisionSy\Laravel\Modules;
 
+use Artisan;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use ItvisionSy\Laravel\Modules\Commands\InitiateDatabaseTable;
 use ItvisionSy\Laravel\Modules\Commands\MakeModule;
@@ -23,6 +24,24 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
 
+        //copy config and views to app locations
+        $this->publishes([
+            __DIR__ . join(DIRECTORY_SEPARATOR, ['', '..', 'config', 'published.php']) => config_path('modules.php')
+            //@TODO:allow publishing and reading the stubs for overriding
+        ]);
+
+        //registers console commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InitiateDatabaseTable::class,
+                MakeModule::class,
+            ]);
+        }
+    }
+
+    public function boot()
+    {
+
         //merge the config
         $this->mergeConfigFrom(__DIR__ . join(DIRECTORY_SEPARATOR, ['', '..', 'config', 'defaults.php']), 'modules');
 
@@ -35,31 +54,16 @@ class ServiceProvider extends BaseServiceProvider
                 if (method_exists($this, 'loadRoutesFrom')) {
                     $this->loadRoutesFrom($routesPath);
                 } else {
-                    if ($this->app->routesAreCached()) {
-                        \Artisan::call('cache:clear');
-                    }
-                    require_once $routesPath;
+                    $module->registerRoutes($this->app);
                 }
             }
             if (($moduleViewsPath = $module->viewsPath())) {
-                $this->loadViewsFrom($moduleViewsPath, $module->id());
+                if (method_exists($this, 'loadViewsFrom')) {
+                    $this->loadViewsFrom($moduleViewsPath, $module->id());
+                } else {
+                    $module->registerViewsPath($this->app);
+                }
             }
-        }
-    }
-
-    public function boot()
-    {
-        //copy config and views to app locations
-        $this->publishes([
-            __DIR__ . join(DIRECTORY_SEPARATOR, ['', '..', 'config', 'published.php']) => config_path('modules.php')
-            //@TODO:allow publishing and reading the stubs for overriding
-        ]);
-        //registers console commands
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                InitiateDatabaseTable::class,
-                MakeModule::class,
-            ]);
         }
     }
 

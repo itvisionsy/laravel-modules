@@ -29,12 +29,12 @@ class InitiateDatabaseTable extends Command implements SelfHandling
     {
         try {
             $result = SimpleDbStoreHandler::createTable();
-            if($result){
+            if ($result) {
                 $this->info("Table modules_storage created successfully!");
-            }else{
+            } else {
                 $this->error("Something went wrong!");
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
     }

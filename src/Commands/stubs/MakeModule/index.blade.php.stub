@@ -1,3 +1,2 @@
 <?php /** @var {{namespace}}\{{id}}\{{class}} $this_module */ ?>
-<h1>Welcome</h1>
-<p>Sample view <a href="{!! $this_module->getPathForRoute('index' /*,['query_param1'=>1,...]*/) !!}">Sample generated path</a></p>
+Module {{$this_module->name()}}

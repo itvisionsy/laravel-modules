@@ -2,7 +2,12 @@
   "name": "itvisionsy/laravel-modules",
   "description": "Laravel 5.1 library to allow modules structure. Each module can have its routes, controllers, views, config, ...",
   "type": "library",
+  "keywords": [
+    "modules",
+    "laravel"
+  ],
   "require": {
+    "php": ">=5.5.9",
     "laravel/framework": "5.1.*"
   },
   "license": "MIT",
@@ -16,5 +21,18 @@
     "psr-4": {
       "ItvisionSy\\Laravel\\Modules\\": "src"
     }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/LaravelModulesTestCase.php"
+    ],
+    "psr-4": {
+      "ItvisionSy\\Laravel\\Modules\\Tests\\": "tests/",
+      "App\\": "app/"
+    }
+  },
+  "require-dev": {
+    "laravel/laravel": "^5.1",
+    "phpunit/phpunit": "^5.7"
   }
 }

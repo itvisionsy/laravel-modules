@@ -9,9 +9,12 @@
 namespace ItvisionSy\Laravel\Modules\StoreHandlers;
 
 use ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface;
+use ItvisionSy\Laravel\Modules\Traits\StaticFactory;
 
 class DummyStoreHandler implements KeyValueStoreInterface
 {
+
+    use StaticFactory;
 
     public function set($key, $value = null)
     {
