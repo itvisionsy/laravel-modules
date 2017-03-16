@@ -33,6 +33,7 @@ class GenericTest extends LaravelModulesTestCase
     public function testModulesServiceProvider()
     {
         $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module"]);
+        $this->loadModuleFiles("Test");
         $this->refreshApplication();
         Modules::get('Test');
     }

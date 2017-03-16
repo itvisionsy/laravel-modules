@@ -82,4 +82,10 @@ abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\Tes
         Config::set('database.connections.sqlite.database', $this->appPath('/database.sqlite'));
     }
 
+    protected function loadModuleFiles($name)
+    {
+        require_once static::modulesPath("/{$name}/Module.php");
+        require_once static::modulesPath("/{$name}/Http/Controllers/WelcomeController.php");
+    }
+
 }

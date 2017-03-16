@@ -26,6 +26,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
 
         //registeration
         $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
+        $this->loadModuleFiles("Test");
 
         //test
         Config::set('modules.modules_enabled_by_default', true);
@@ -41,9 +42,10 @@ class StoreHandlersTest extends LaravelModulesTestCase
 
         //module
         $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
+        $this->loadModuleFiles("Test");
 
         //config
-        touch(static::appPath('database.sqlite'));
+        touch(static::appPath('/database.sqlite'));
         Modules::setStoreHandler(SimpleDbStoreHandler::make());
         $this->artisan('modules:db:init');
 
@@ -66,7 +68,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
         $this->assertEquals(0, count(Modules::disabled()));
 
         //clean up
-        static::rm($this->appPath('/../database.sqlite'));
+        static::rm($this->appPath('/database.sqlite'));
 
     }
 

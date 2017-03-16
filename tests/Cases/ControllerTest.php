@@ -23,6 +23,7 @@ class ControllerTest extends LaravelModulesTestCase
     {
         //registeration
         $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
+        $this->loadModuleFiles("Test");
         \App\Modules\Test\Module::make()->registerFrameworkResources($this->app);
 
         //tests

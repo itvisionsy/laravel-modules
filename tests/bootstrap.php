@@ -27,7 +27,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 |
 */
 
-$compiledPath = __DIR__.'/../vendor/laravel/laravel/bootstrap/cache/compiled.php';
+$compiledPath = __DIR__ . '/../vendor/laravel/laravel/bootstrap/cache/compiled.php';
 
 if (file_exists($compiledPath)) {
     require $compiledPath;
