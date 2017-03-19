@@ -31,7 +31,8 @@ abstract class Module implements StaticAndInstanceAccessInterface
         return ['id', 'name', 'urlPrefix', 'routePrefix',
             'isEnabled', 'isDisabled',
             'disableModule', 'enableModule',
-            'modulePath', 'viewsPath', 'getViewName', 'renderView', 'getRoutePath', 'getRouteName', 'getPathForRoute'
+            'modulePath', 'viewsPath', 'getViewName', 'renderView', 'getRoutePath', 'getRouteName', 'getPathForRoute',
+            'getStoredValue', 'setStoredValue'
         ];
     }
 
@@ -237,6 +238,16 @@ abstract class Module implements StaticAndInstanceAccessInterface
         $app = $app ?: app();
         $this->registerViewsPath($app);
         $this->registerRoutes($app);
+    }
+
+    protected function setStoreValue($key, $value = null)
+    {
+        Modules::setStoredValue($key, $value, $this);
+    }
+
+    protected function getStoreValue($key, $default = null)
+    {
+        Modules::getStoredValue($key, $default, $this);
     }
 
 }

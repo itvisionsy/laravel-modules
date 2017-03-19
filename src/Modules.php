@@ -33,7 +33,7 @@ class Modules implements StaticAndInstanceAccessInterface
     public static function grantAccess()
     {
         return [
-            'get', 'all', 'find', 'enabled', 'disabled', 'getStoreHandler', 'setStoreHandler'
+            'get', 'all', 'find', 'enabled', 'disabled', 'getStoreHandler', 'setStoreHandler', 'setStoredValue', 'getStoredValue'
         ];
     }
 
@@ -75,21 +75,23 @@ class Modules implements StaticAndInstanceAccessInterface
     /**
      * @param $key
      * @param null $default
+     * @param Module $module
      * @return mixed
      */
-    protected static function getStoredValue($key, $default = null)
+    protected function getStoredValue($key, $default = null, Module $module = null)
     {
-        return static::getStoreHandler()->get(config("modules.store_public_prefix_key", "modules") . '|' . $key, $default);
+        return static::getStoreHandler()->get(($module ? $module->id() : config("modules.store_public_prefix_key", "modules")) . '|' . $key, $default);
     }
 
     /**
      * @param $key
      * @param null $value
+     * @param Module $module
      * @return mixed
      */
-    protected static function setStoredValue($key, $value = null)
+    protected function setStoredValue($key, $value = null, Module $module = null)
     {
-        return static::getStoreHandler()->set(config("modules.store_public_prefix_key", "modules") . '|' . $key, $value);
+        return static::getStoreHandler()->set(($module ? $module->id() : config("modules.store_public_prefix_key", "modules")) . '|' . $key, $value);
     }
 
     /**
