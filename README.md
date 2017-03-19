@@ -58,5 +58,39 @@ routes (inside `Http/routes.php`), controller (inside `Http/Controllers/`), and 
 
 As you have the basic structure, you can start creating your files and classes as normal. Nothing special to worry about.
 
+## What is Store Handler
+It is a feature allows a per-module configuration to be saved in the database, in addition to a flag to identify if a 
+module is enabled or disabled.
+
+You need a class that implements the `ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface` interface, which
+defines two methods: `set($key, $value)` and `get($key, $default=null)`.
+
+There is a ready made implementation in the `\ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler` class,
+which utilizes a DB connection (default one by default) to store the config in a simple key/value table.
+
+The feature comes disabled by default by setting the class `\ItvisionSy\Laravel\Modules\StoreHandlers\DummyStoreHandler`
+as the store handler. To enable it, just change the `store_handler` config setting in the `config/modules.php` config 
+file to use the `SimpleDbStoreHandler` class mentioned above.
+```php
+//config/modules.php config file
+return [
+'store_handler' => \ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler::class,
+];
+```
+
+Also, you need to create the database table for the store. We provided a simple artisan command to do that. After you
+have configured everything correctly, simply execute the following command:
+`php artisan modules:db:init`
+which will take care about creating the database table by executing the following SQL command:
+```sql
+CREATE TABLE IF NOT EXISTS `modules_storage` (
+  `key` VARCHAR(200) UNIQUE NOT NULL PRIMARY KEY, 
+  `value` VARCHAR(200) NULL
+);
+```
+You can create the table manually, and override its name by extending the class and change the `$tableName` property.
+
+
+
 ## Thanks
  - [JetBrains](https://www.jetbrains.com/) for the free license of [PHPStorm IDE](https://www.jetbrains.com/phpstorm/specials/phpstorm/phpstorm.html). The great tool I wrote this module with.
