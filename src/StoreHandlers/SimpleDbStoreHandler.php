@@ -9,6 +9,7 @@
 namespace ItvisionSy\Laravel\Modules\StoreHandlers;
 
 use DB;
+use Illuminate\Database\Connection;
 use ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface;
 use ItvisionSy\Laravel\Modules\Traits\StaticFactory;
 
