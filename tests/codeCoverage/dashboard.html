@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /Users/muhannad/Projects/laravel-modules/src</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/Users/muhannad/Projects/laravel-modules/src</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Commands/InitiateDatabaseTable.php.html#9">InitiateDatabaseTable</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Module.php.html#16">Module</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controller.php.html#14">Controller</a></td><td class="text-right">84%</td></tr>
+       <tr><td><a href="Modules.php.html#24">Modules</a></td><td class="text-right">87%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Module.php.html#16">Module</a></td><td class="text-right">46</td></tr>
+       <tr><td><a href="Modules.php.html#24">Modules</a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Controller.php.html#14">Controller</a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="Commands/InitiateDatabaseTable.php.html#9">InitiateDatabaseTable</a></td><td class="text-right">4</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Module.php.html#248"><abbr title="Module::getStoreValue">getStoreValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Module.php.html#243"><abbr title="Module::setStoreValue">setStoreValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Module.php.html#208"><abbr title="Module::registerViewsPath">registerViewsPath</abbr></a></td><td class="text-right">62%</td></tr>
+       <tr><td><a href="Module.php.html#221"><abbr title="Module::registerRoutes">registerRoutes</abbr></a></td><td class="text-right">62%</td></tr>
+       <tr><td><a href="Modules.php.html#101"><abbr title="Modules::getStoreHandler">getStoreHandler</abbr></a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="Modules.php.html#135"><abbr title="Modules::get">get</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="Commands/InitiateDatabaseTable.php.html#28"><abbr title="InitiateDatabaseTable::handle">handle</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="Controller.php.html#35"><abbr title="Controller::module">module</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Module.php.html#233"><abbr title="Module::registerFrameworkResources">registerFrameworkResources</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Modules.php.html#147"><abbr title="Modules::refreshModules">refreshModules</abbr></a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="ServiceProvider.php.html#42"><abbr title="ServiceProvider::boot">boot</abbr></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Modules.php.html#101"><abbr title="Modules::getStoreHandler">getStoreHandler</abbr></a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="Modules.php.html#147"><abbr title="Modules::refreshModules">refreshModules</abbr></a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="ServiceProvider.php.html#42"><abbr title="ServiceProvider::boot">boot</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Module.php.html#221"><abbr title="Module::registerRoutes">registerRoutes</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Module.php.html#208"><abbr title="Module::registerViewsPath">registerViewsPath</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Controller.php.html#35"><abbr title="Controller::module">module</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Commands/InitiateDatabaseTable.php.html#28"><abbr title="InitiateDatabaseTable::handle">handle</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Module.php.html#233"><abbr title="Module::registerFrameworkResources">registerFrameworkResources</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Modules.php.html#135"><abbr title="Modules::get">get</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 4.0.7</a> using <a href="https://secure.php.net/" target="_top">PHP 5.6.29</a> with <a href="https://xdebug.org/">Xdebug 2.2.5</a> and <a href="https://phpunit.de/">PHPUnit 5.7.16</a> at Sat Mar 25 14:45:58 UTC 2017.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,4,2,4], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,3,2,4,0,51], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[80,4,"<a href=\"Commands\/InitiateDatabaseTable.php.html#9\">InitiateDatabaseTable<\/a>"],[94.594594594595,8,"<a href=\"Commands\/MakeModule.php.html#8\">MakeModule<\/a>"],[84.615384615385,5,"<a href=\"Controller.php.html#14\">Controller<\/a>"],[80.701754385965,37,"<a href=\"Module.php.html#16\">Module<\/a>"],[87.179487179487,39,"<a href=\"Modules.php.html#24\">Modules<\/a>"],[92.857142857143,8,"<a href=\"ServiceProvider.php.html#16\">ServiceProvider<\/a>"],[100,2,"<a href=\"StoreHandlers\/DummyStoreHandler.php.html#14\">DummyStoreHandler<\/a>"],[100,8,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#16\">SimpleDbStoreHandler<\/a>"],[100,4,"<a href=\"Traits\/StaticAndInstanceAccessTrait.php.html#14\">StaticAndInstanceAccessTrait<\/a>"],[100,1,"<a href=\"Traits\/StaticFactory.php.html#12\">StaticFactory<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Commands\/InitiateDatabaseTable.php.html#18\">InitiateDatabaseTable::__construct<\/a>"],[75,3,"<a href=\"Commands\/InitiateDatabaseTable.php.html#28\">InitiateDatabaseTable::handle<\/a>"],[100,1,"<a href=\"Commands\/MakeModule.php.html#27\">MakeModule::__construct<\/a>"],[100,2,"<a href=\"Commands\/MakeModule.php.html#38\">MakeModule::handle<\/a>"],[100,2,"<a href=\"Commands\/MakeModule.php.html#72\">MakeModule::makeDirectory<\/a>"],[100,2,"<a href=\"Commands\/MakeModule.php.html#79\">MakeModule::copyStub<\/a>"],[100,1,"<a href=\"Commands\/MakeModule.php.html#82\">MakeModule::anonymous function<\/a>"],[100,1,"<a href=\"Controller.php.html#26\">Controller::renderView<\/a>"],[83.333333333333,4,"<a href=\"Controller.php.html#35\">Controller::module<\/a>"],[100,1,"<a href=\"Module.php.html#29\">Module::grantAccess<\/a>"],[100,1,"<a href=\"Module.php.html#39\">Module::__construct<\/a>"],[100,1,"<a href=\"Module.php.html#47\">Module::startup<\/a>"],[100,2,"<a href=\"Module.php.html#56\">Module::routesPath<\/a>"],[100,1,"<a href=\"Module.php.html#65\">Module::id<\/a>"],[100,1,"<a href=\"Module.php.html#73\">Module::name<\/a>"],[100,2,"<a href=\"Module.php.html#81\">Module::routePrefix<\/a>"],[100,2,"<a href=\"Module.php.html#89\">Module::urlPrefix<\/a>"],[100,1,"<a href=\"Module.php.html#97\">Module::isEnabled<\/a>"],[100,1,"<a href=\"Module.php.html#105\">Module::isDisabled<\/a>"],[100,1,"<a href=\"Module.php.html#113\">Module::enableModule<\/a>"],[100,1,"<a href=\"Module.php.html#121\">Module::disableModule<\/a>"],[100,2,"<a href=\"Module.php.html#131\">Module::modulePath<\/a>"],[100,2,"<a href=\"Module.php.html#141\">Module::viewsPath<\/a>"],[100,1,"<a href=\"Module.php.html#155\">Module::getViewName<\/a>"],[100,1,"<a href=\"Module.php.html#166\">Module::renderView<\/a>"],[100,1,"<a href=\"Module.php.html#178\">Module::getRoutePath<\/a>"],[100,1,"<a href=\"Module.php.html#190\">Module::getRouteName<\/a>"],[100,1,"<a href=\"Module.php.html#203\">Module::getPathForRoute<\/a>"],[62.5,4,"<a href=\"Module.php.html#208\">Module::registerViewsPath<\/a>"],[62.5,4,"<a href=\"Module.php.html#221\">Module::registerRoutes<\/a>"],[83.333333333333,3,"<a href=\"Module.php.html#233\">Module::registerFrameworkResources<\/a>"],[0,1,"<a href=\"Module.php.html#243\">Module::setStoreValue<\/a>"],[0,1,"<a href=\"Module.php.html#248\">Module::getStoreValue<\/a>"],[100,1,"<a href=\"Modules.php.html#33\">Modules::grantAccess<\/a>"],[100,1,"<a href=\"Modules.php.html#44\">Modules::isModuleEnabled<\/a>"],[100,2,"<a href=\"Modules.php.html#53\">Modules::disableModule<\/a>"],[100,2,"<a href=\"Modules.php.html#66\">Modules::enableModule<\/a>"],[100,2,"<a href=\"Modules.php.html#81\">Modules::getStoredValue<\/a>"],[100,2,"<a href=\"Modules.php.html#92\">Modules::setStoredValue<\/a>"],[68.75,8,"<a href=\"Modules.php.html#101\">Modules::getStoreHandler<\/a>"],[100,1,"<a href=\"Modules.php.html#125\">Modules::setStoreHandler<\/a>"],[75,2,"<a href=\"Modules.php.html#135\">Modules::get<\/a>"],[87.096774193548,9,"<a href=\"Modules.php.html#147\">Modules::refreshModules<\/a>"],[100,2,"<a href=\"Modules.php.html#205\">Modules::all<\/a>"],[100,2,"<a href=\"Modules.php.html#213\">Modules::enabled<\/a>"],[100,2,"<a href=\"Modules.php.html#222\">Modules::disabled<\/a>"],[100,1,"<a href=\"Modules.php.html#231\">Modules::modulesDirectory<\/a>"],[100,1,"<a href=\"Modules.php.html#239\">Modules::modulesNamespace<\/a>"],[100,1,"<a href=\"Modules.php.html#247\">Modules::moduleClassName<\/a>"],[100,2,"<a href=\"ServiceProvider.php.html#24\">ServiceProvider::register<\/a>"],[88.888888888889,6,"<a href=\"ServiceProvider.php.html#42\">ServiceProvider::boot<\/a>"],[100,1,"<a href=\"StoreHandlers\/DummyStoreHandler.php.html#19\">DummyStoreHandler::set<\/a>"],[100,1,"<a href=\"StoreHandlers\/DummyStoreHandler.php.html#24\">DummyStoreHandler::get<\/a>"],[100,2,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#26\">SimpleDbStoreHandler::getConnection<\/a>"],[100,1,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#37\">SimpleDbStoreHandler::createTable<\/a>"],[100,1,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#42\">SimpleDbStoreHandler::statement<\/a>"],[100,1,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#47\">SimpleDbStoreHandler::select<\/a>"],[100,1,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#52\">SimpleDbStoreHandler::set<\/a>"],[100,2,"<a href=\"StoreHandlers\/SimpleDbStoreHandler.php.html#57\">SimpleDbStoreHandler::get<\/a>"],[100,2,"<a href=\"Traits\/StaticAndInstanceAccessTrait.php.html#17\">StaticAndInstanceAccessTrait::__call<\/a>"],[100,2,"<a href=\"Traits\/StaticAndInstanceAccessTrait.php.html#25\">StaticAndInstanceAccessTrait::__callStatic<\/a>"],[100,1,"<a href=\"Traits\/StaticFactory.php.html#18\">StaticFactory::make<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
