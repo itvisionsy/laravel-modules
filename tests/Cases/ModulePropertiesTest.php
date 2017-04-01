@@ -15,7 +15,7 @@ class ModulePropertiesTest extends LaravelModulesTestCase
 
     public function testModuleProperties()
     {
-        $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module"]);
+        $this->artisan('make:module', ["id" => "Test", "name" => "Test Module"]);
         $this->loadModuleFiles("Test");
         $module = \App\Modules\Test\Module::make();
         $this->assertEquals('Test', $module->id());

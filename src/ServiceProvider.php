@@ -68,7 +68,7 @@ class ServiceProvider extends BaseServiceProvider {
         }
     }
 
-    protected function thisLoadMigrationsFrom($path) {
+    protected function thisLoadMigrationsFrom($paths) {
         if (method_exists($this, 'loadMigrationsFrom')) {
             $this->loadMigrationsFrom($path);
         } else {
