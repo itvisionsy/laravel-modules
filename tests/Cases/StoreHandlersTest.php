@@ -25,7 +25,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
         Config::set('modules.store_handler', DummyStoreHandler::class);
 
         //registeration
-        $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
+        $this->artisan('make:module', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
         $this->loadModuleFiles("Test");
 
         //test
@@ -41,7 +41,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
     {
 
         //module
-        $this->artisan('modules:make', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
+        $this->artisan('make:module', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
         $this->loadModuleFiles("Test");
 
         //config
