@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Muhannad Shelleh <muhannad.shelleh@live.com>
@@ -13,21 +14,19 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use ItvisionSy\Laravel\Modules\Commands\InitiateDatabaseTable;
 use ItvisionSy\Laravel\Modules\Commands\MakeModule;
 
-class ServiceProvider extends BaseServiceProvider
-{
+class ServiceProvider extends BaseServiceProvider {
 
     /**
      * Register the service provider.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
 
         //copy config and views to app locations
         $this->publishes([
             __DIR__ . join(DIRECTORY_SEPARATOR, ['', '..', 'config', 'published.php']) => config_path('modules.php')
-            //@TODO:allow publishing and reading the stubs for overriding
+                //@TODO:allow publishing and reading the stubs for overriding
         ]);
 
         //registers console commands
@@ -39,8 +38,7 @@ class ServiceProvider extends BaseServiceProvider
         }
     }
 
-    public function boot()
-    {
+    public function boot() {
 
         //merge the config
         $this->mergeConfigFrom(__DIR__ . join(DIRECTORY_SEPARATOR, ['', '..', 'config', 'defaults.php']), 'modules');
@@ -64,6 +62,21 @@ class ServiceProvider extends BaseServiceProvider
                     $module->registerViewsPath($this->app);
                 }
             }
+            if (($moduleMigrationsPath = $module->migrationsPath())) {
+                $this->thisLoadMigrationsFrom($moduleMigrationsPath);
+            }
+        }
+    }
+
+    protected function thisLoadMigrationsFrom($path) {
+        if (method_exists($this, 'loadMigrationsFrom')) {
+            $this->loadMigrationsFrom($path);
+        } else {
+            $this->app->afterResolving('migrator', function ($migrator) use ($paths) {
+                foreach ((array) $paths as $path) {
+                    $migrator->path($path);
+                }
+            });
         }
     }
 
