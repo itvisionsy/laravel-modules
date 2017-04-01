@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Muhannad Shelleh <muhannad.shelleh@live.com>
@@ -13,39 +14,44 @@ use ItvisionSy\Laravel\Modules\Interfaces\StaticAndInstanceAccessInterface;
 use ItvisionSy\Laravel\Modules\Traits\StaticAndInstanceAccessTrait;
 use ItvisionSy\Laravel\Modules\Traits\StaticFactory;
 
-abstract class Module implements StaticAndInstanceAccessInterface
-{
+abstract class Module implements StaticAndInstanceAccessInterface {
 
     use StaticAndInstanceAccessTrait;
     use StaticFactory;
 
-    static protected $_routes = [];
-
-    protected $moduleId;
-    protected $moduleName;
-    protected $moduleRouteNamePrefix;
-    protected $moduleUrlPrefix;
-
-    public static function grantAccess()
-    {
-        return ['id', 'name', 'urlPrefix', 'routePrefix',
-            'isEnabled', 'isDisabled',
-            'disableModule', 'enableModule',
-            'modulePath', 'viewsPath', 'getViewName', 'renderView', 'getRoutePath', 'getRouteName', 'getPathForRoute',
-            'getStoredValue', 'setStoredValue'
-        ];
+    /**
+     *
+     * @return Module|$this|static|self
+     */
+    protected static function this() {
+        if (!array_key_exists(get_called_class(), static::$startedUp)) {
+            static::$startedUp[get_called_class()] = static::make();
+        }
+        return static::$startedUp[get_called_class()];
     }
 
-    public function __construct()
-    {
-        $this->startup();
+    static protected $_routes = [];
+    static protected $moduleId;
+    static protected $moduleName;
+    static protected $moduleRouteNamePrefix;
+    static protected $moduleUrlPrefix;
+    static protected $startedUp = [];
+
+    public static function grantAccess() {
+        return ['registerViewsPath', 'registerRoutes', 'registerFrameworkResources', 'registerMigrationsPath'];
+    }
+
+    public function __construct() {
+        if (array_key_exists(get_called_class(), static::$startedUp) === false) {
+            static::startup();
+            static::$startedUp[get_called_class()] = $this;
+        }
     }
 
     /**
      * @return mixed Loads helpers and dependencies
      */
-    public function startup()
-    {
+    public static function startup() {
 
     }
 
@@ -53,74 +59,65 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * Returns a path to the routes file, or false if no routes is required
      * @return bool|string
      */
-    public function routesPath()
-    {
-        $defaultPath = $this->modulePath(join(DIRECTORY_SEPARATOR, ['', 'Http', 'routes.php']));
+    public static function routesPath() {
+        $defaultPath = static::modulePath(join(DIRECTORY_SEPARATOR, ['', 'Http', 'routes.php']));
         return file_exists($defaultPath) ? $defaultPath : false;
     }
 
     /**
      * @return string unique identifier of the module
      */
-    protected function id()
-    {
-        return $this->moduleId;
+    public static function id() {
+        return static::$moduleId;
     }
 
     /**
      * @return string display name of the module
      */
-    protected function name()
-    {
-        return $this->moduleName;
+    public static function name() {
+        return static::$moduleName;
     }
 
     /**
      * @return mixed
      */
-    protected function routePrefix()
-    {
-        return $this->moduleRouteNamePrefix ?: $this->id();
+    public static function routePrefix() {
+        return static::$moduleRouteNamePrefix ?: static::id();
     }
 
     /**
      * @return mixed
      */
-    protected function urlPrefix()
-    {
-        return $this->moduleUrlPrefix ?: $this->id();
+    public static function urlPrefix() {
+        return static::$moduleUrlPrefix ?: static::id();
     }
 
     /**
      * @return boolean
      */
-    protected function isEnabled()
-    {
-        return Modules::isModuleEnabled($this);
+    public static function isEnabled() {
+        return Modules::isModuleEnabled(static::this());
     }
 
     /**
      * @return bool
      */
-    protected function isDisabled()
-    {
-        return !$this->isEnabled();
+    public static function isDisabled() {
+        return !static::isEnabled();
     }
 
     /**
      * @return mixed
      */
-    protected function enableModule()
-    {
-        return Modules::enableModule($this);
+    public static function enableModule() {
+        return Modules::enableModule(static::this());
     }
 
     /**
      * @return mixed
      */
-    protected function disableModule()
-    {
-        return Modules::disableModule($this);
+    public static function disableModule() {
+        return Modules::disableModule(static::this());
     }
 
     /**
@@ -128,19 +125,29 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param $path
      * @return string
      */
-    protected function modulePath($path)
-    {
-        $class = explode("\\", get_class($this))[2];
+    public static function modulePath($path) {
+        $class = explode("\\", get_class(static::this()))[2];
         $fullPath = rtrim(config('modules.directory'), "\\") . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . ($path ? $path : "");
         return $fullPath;
     }
 
     /**
+     *
+     * @return string|null
+     */
+    public static function migrationsPath() {
+        $dir = static::modulePath("Migrations" . DIRECTORY_SEPARATOR);
+        if (is_dir($dir)) {
+            return $dir;
+        }
+        return null;
+    }
+
+    /**
      * @return null|string path to views resources.
      */
-    protected function viewsPath()
-    {
-        $dir = $this->modulePath("Views" . DIRECTORY_SEPARATOR);
+    public static function viewsPath() {
+        $dir = static::modulePath("Views" . DIRECTORY_SEPARATOR);
         if (is_dir($dir)) {
             return $dir;
         }
@@ -152,9 +159,8 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param $name
      * @return string
      */
-    protected function getViewName($name)
-    {
-        return $this->id() . "::" . $name;
+    public static function getViewName($name) {
+        return static::id() . "::" . $name;
     }
 
     /**
@@ -163,9 +169,8 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param array $mergeData
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function renderView($viewName, array $data = [], array $mergeData = [])
-    {
-        return \view($this->getViewName($viewName), $data, $mergeData + ['this_module' => $this, '__this_module' => $this]);
+    public static function renderView($viewName, array $data = [], array $mergeData = []) {
+        return \view(static::getViewName($viewName), $data, $mergeData + ['this_module' => static::this(), '__this_module' => static::this()]);
     }
 
     /**
@@ -175,9 +180,8 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param $path
      * @return mixed
      */
-    protected function getRoutePath($path)
-    {
-        return trim(str_replace('//', '/', join('/', [config('modules.route_prefix'), $this->urlPrefix(), $path])), '/');
+    public static function getRoutePath($path) {
+        return trim(str_replace('//', '/', join('/', [config('modules.route_prefix'), static::urlPrefix(), $path])), '/');
     }
 
     /**
@@ -187,9 +191,8 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param $name
      * @return mixed
      */
-    protected function getRouteName($name)
-    {
-        return trim(str_replace('..', '.', join('.', [config('modules.route_name_prefix'), $this->routePrefix(), $name])), '.');
+    public static function getRouteName($name) {
+        return trim(str_replace('..', '.', join('.', [config('modules.route_name_prefix'), static::routePrefix(), $name])), '.');
     }
 
     /**
@@ -200,54 +203,48 @@ abstract class Module implements StaticAndInstanceAccessInterface
      * @param Route|null $route
      * @return Route
      */
-    protected function getPathForRoute($routeName, array $params = [], $absolute = true, Route $route = null)
-    {
-        return route($this->getRouteName($routeName), $params, $absolute, $route);
+    public static function getPathForRoute($routeName, array $params = [], $absolute = true, Route $route = null) {
+        return route(static::getRouteName($routeName), $params, $absolute, $route);
     }
 
-    public function registerViewsPath($app = null)
-    {
-        if (!$this->viewsPath()) {
+    protected static function registerViewsPath($app = null) {
+        if (!static::viewsPath()) {
             return;
         }
         $app = $app ?: app();
-        if (is_dir($appPath = $app->basePath() . '/resources/views/vendor/' . $this->id())) {
-            $app['view']->addNamespace($this->id(), $appPath);
+        if (is_dir($appPath = $app->basePath() . '/resources/views/vendor/' . static::id())) {
+            $app['view']->addNamespace(static::id(), $appPath);
         }
 
-        $app['view']->addNamespace($this->id(), $this->viewsPath());
+        $app['view']->addNamespace(static::id(), static::viewsPath());
     }
 
-    public function registerRoutes($app = null)
-    {
-        if (!$this->routesPath()) {
+    protected static function registerRoutes($app = null) {
+        if (!static::routesPath()) {
             return;
         }
         $app = $app ?: app();
         if ($app->routesAreCached()) {
             Artisan::call('cache:clear');
         }
-        require_once $this->routesPath();
+        require_once static::routesPath();
     }
 
-    public function registerFrameworkResources($app = null)
-    {
-        if ($this->isDisabled()) {
+    protected static function registerFrameworkResources($app = null) {
+        if (static::isDisabled()) {
             return;
         }
         $app = $app ?: app();
-        $this->registerViewsPath($app);
-        $this->registerRoutes($app);
+        static::registerViewsPath($app);
+        static::registerRoutes($app);
     }
 
-    protected function setStoreValue($key, $value = null)
-    {
-        Modules::setStoredValue($key, $value, $this);
+    protected static function setStoreValue($key, $value = null) {
+        Modules::setStoredValue($key, $value, static::this());
     }
 
-    protected function getStoreValue($key, $default = null)
-    {
-        Modules::getStoredValue($key, $default, $this);
+    protected static function getStoreValue($key, $default = null) {
+        Modules::getStoredValue($key, $default, static::this());
     }
 
 }

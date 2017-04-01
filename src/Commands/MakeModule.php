@@ -8,8 +8,8 @@ use Illuminate\Filesystem\Filesystem;
 class MakeModule extends \Illuminate\Console\Command implements SelfHandling
 {
 
-    protected $signature = 'modules:make 
-                                {id : the ID of the module. Should be unique across modules} 
+    protected $signature = 'make:module
+                                {id : the ID of the module. Should be unique across modules}
                                 {name : the display name of the module}
                                 {--url= : the URL/route-names part for the module}
                                 ';
@@ -58,6 +58,7 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling
 
         $this->makeDirectory($path);
         $this->makeDirectory("{$path}Views");
+        $this->makeDirectory("{$path}Migrations");
         $this->makeDirectory("{$path}Models");
         $this->makeDirectory("{$path}Http{$ds}Controllers");
         $this->copyStub("Module.php.stub", "{$path}{$className}.php", $stubData + []);
