@@ -45,6 +45,7 @@ class ServiceProvider extends BaseServiceProvider {
 
         //load the modules
         $modules = Modules::enabled();
+        $publishesMigrations = [];
         /** @var Module[]|array $modules */
         foreach ($modules as $module) {
             $routesPath = $module->routesPath();
@@ -64,8 +65,12 @@ class ServiceProvider extends BaseServiceProvider {
             }
             if (($moduleMigrationsPath = $module->migrationsPath())) {
 //                $this->thisLoadMigrationsFrom($moduleMigrationsPath);
+                $publishesMigrations[$moduleMigrationsPath] = database_path('migrations');
             }
         }
+
+        //publishes migration
+        $this->publishes($publishesMigrations, 'migrations');
     }
 
     protected function thisLoadMigrationsFrom($paths) {
