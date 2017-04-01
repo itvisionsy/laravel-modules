@@ -63,7 +63,7 @@ class ServiceProvider extends BaseServiceProvider {
                 }
             }
             if (($moduleMigrationsPath = $module->migrationsPath())) {
-                $this->thisLoadMigrationsFrom($moduleMigrationsPath);
+//                $this->thisLoadMigrationsFrom($moduleMigrationsPath);
             }
         }
     }
