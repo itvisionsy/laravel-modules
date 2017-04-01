@@ -1,2 +1,2 @@
-<?php /** @var {{namespace}}\{{id}}\{{class}} $this_module */ ?>
+<?php /* @var $this_module {{namespace}}\{{id}}\{{class}} */ ?>
 Module {{$this_module->name()}}

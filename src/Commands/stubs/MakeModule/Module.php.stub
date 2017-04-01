@@ -7,9 +7,9 @@ use ItvisionSy\Laravel\Modules\Module as BaseModule;
 class {{class}} extends BaseModule
 {
 
-    protected $moduleId='{{id}}';
-    protected $moduleName='{{name}}';
-    protected $moduleRouteNamePrefix='{{url_name}}';
-    protected $moduleUrlPrefix='{{url_name}}';
+    static protected $moduleId='{{id}}';
+    static protected $moduleName='{{name}}';
+    static protected $moduleRouteNamePrefix='{{url_name}}';
+    static protected $moduleUrlPrefix='{{url_name}}';
 
 }
