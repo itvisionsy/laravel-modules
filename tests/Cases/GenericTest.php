@@ -73,9 +73,9 @@ class GenericTest extends LaravelModulesTestCase {
     }
 
     public function testDeletedModuleFiles() {
-        $this->artisan('make:module', ["id" => "Test2", "name" => "Test Module"]);
 
         //Deleted
+        $this->artisan('make:module', ["id" => "Test2", "name" => "Test Module"]);
         $this->rm(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test2" . DIRECTORY_SEPARATOR . "Module.php");
         $this->loadModuleFiles("Test2");
         $this->refreshApplication();
@@ -87,19 +87,23 @@ class GenericTest extends LaravelModulesTestCase {
         }
 
         //No class defined
-        file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test2" . DIRECTORY_SEPARATOR . "Module.php", "<?php ");
+        $this->artisan('make:module', ["id" => "Test3", "name" => "Test Module"]);
+        file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test3" . DIRECTORY_SEPARATOR . "Module.php", "<?php ");
+        $this->loadModuleFiles('Test3');
         Modules::refreshModules();
         try {
-            Modules::get('Test2');
+            Modules::get('Test3');
         } catch (Exception $e) {
-            $this->assertEquals("Module not found: Test2", $e->getMessage());
+            $this->assertEquals("Module not found: Test3", $e->getMessage());
         }
 
         //incorrect module class inheritence
         $this->expectException(Exception::class);
-        file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test2" . DIRECTORY_SEPARATOR . "Module.php", "<?php namespace App\\Modules\\Test2; class Module { }");
+        $this->artisan('make:module', ["id" => "Test4", "name" => "Test Module"]);
+        file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test4" . DIRECTORY_SEPARATOR . "Module.php", "<?php namespace App\\Modules\\Test4; class Module { }");
+        $this->loadModuleFiles('Test4');
         Modules::refreshModules();
-        Modules::get('Test2');
+        Modules::get('Test4');
     }
 
 }
