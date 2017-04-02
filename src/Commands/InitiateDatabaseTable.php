@@ -4,7 +4,7 @@ namespace ItvisionSy\Laravel\Modules\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\SelfHandling;
-use ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler;
+use ItvisionSy\Laravel\Modules\StoreHandlers\SqliteSimpleDbStoreHandler;
 
 class InitiateDatabaseTable extends Command implements SelfHandling
 {
@@ -28,7 +28,7 @@ class InitiateDatabaseTable extends Command implements SelfHandling
     public function handle()
     {
         try {
-            $result = SimpleDbStoreHandler::createTable();
+            $result = SqliteSimpleDbStoreHandler::createTable();
             if ($result) {
                 $this->info("Table modules_storage created successfully!");
             } else {

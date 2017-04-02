@@ -12,8 +12,7 @@ use RecursiveIteratorIterator;
  * Date: 3/16/17
  * Time: 7:35 AM
  */
-abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\TestCase
-{
+abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\TestCase {
 
     /**
      * Creates the application.
@@ -22,11 +21,14 @@ abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\Tes
      *
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\Illuminate\Foundation\Application
      */
-    public function createApplication()
-    {
+    public function createApplication(callable $callable = null) {
         $app = require __DIR__ . '/../vendor/laravel/laravel/bootstrap/app.php';
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+
+        if ($callable) {
+            $callable();
+        }
 
         $this->mockConfig();
 
@@ -35,8 +37,7 @@ abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\Tes
         return $app;
     }
 
-    protected static function rm($path)
-    {
+    protected static function rm($path) {
         if (is_dir($path)) {
             $it = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
             $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
@@ -53,39 +54,37 @@ abstract class LaravelModulesTestCase extends \Illuminate\Foundation\Testing\Tes
         }
     }
 
-    protected static function appPath($path = '')
-    {
+    protected static function appPath($path = '') {
         return preg_replace('#' . DIRECTORY_SEPARATOR . '+#', DIRECTORY_SEPARATOR, str_replace(['/', '\\'], DIRECTORY_SEPARATOR, __DIR__ . '/../app/' . $path));
     }
 
-    protected static function modulesPath($path = '')
-    {
+    protected static function modulesPath($path = '') {
         return static::appPath('modules/' . $path);
     }
 
-    public function setUp()
-    {
+    public function setUp() {
         parent::setUp();
         mkdir(static::appPath());
         $this->mockConfig();
     }
 
-    public function tearDown()
-    {
+    public function tearDown() {
         static::rm(static::appPath());
         parent::tearDown();
     }
 
-    protected function mockConfig()
-    {
+    protected function mockConfig() {
         Config::set('modules.directory', $this->modulesPath());
         Config::set('database.connections.sqlite.database', $this->appPath('/database.sqlite'));
     }
 
-    protected function loadModuleFiles($name)
-    {
-        require_once static::modulesPath("/{$name}/Module.php");
-        require_once static::modulesPath("/{$name}/Http/Controllers/WelcomeController.php");
+    protected function loadModuleFiles($name) {
+        if (file_exists(static::modulesPath("/{$name}/Module.php"))) {
+            require_once static::modulesPath("/{$name}/Module.php");
+        }
+        if (file_exists(static::modulesPath("/{$name}/Http/Controllers/WelcomeController.php"))) {
+            require_once static::modulesPath("/{$name}/Http/Controllers/WelcomeController.php");
+        }
     }
 
 }

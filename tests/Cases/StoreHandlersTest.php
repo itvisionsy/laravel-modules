@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Muhannad Shelleh <muhannad.shelleh@live.com>
@@ -11,15 +12,13 @@ namespace ItvisionSy\Laravel\Modules\Tests\Cases;
 use App\Modules\Test\Module as TestModule;
 use ItvisionSy\Laravel\Modules\Modules;
 use ItvisionSy\Laravel\Modules\StoreHandlers\DummyStoreHandler;
-use ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler;
+use ItvisionSy\Laravel\Modules\StoreHandlers\SqliteSimpleDbStoreHandler;
 use ItvisionSy\Laravel\Modules\Tests\LaravelModulesTestCase;
 use Config;
 
-class StoreHandlersTest extends LaravelModulesTestCase
-{
+class StoreHandlersTest extends LaravelModulesTestCase {
 
-    public function testDummyStoreHandler()
-    {
+    public function testDummyStoreHandler() {
 
         //config
         Config::set('modules.store_handler', DummyStoreHandler::class);
@@ -37,8 +36,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
         $this->assertFalse(TestModule::isEnabled());
     }
 
-    public function testSimpleDbStoreHandler()
-    {
+    public function testSimpleDbStoreHandler() {
 
         //module
         $this->artisan('make:module', ["id" => "Test", "name" => "Test Module", "--url" => "test"]);
@@ -46,7 +44,7 @@ class StoreHandlersTest extends LaravelModulesTestCase
 
         //config
         touch(static::appPath('/database.sqlite'));
-        Modules::setStoreHandler(SimpleDbStoreHandler::make());
+        Modules::setStoreHandler(SqliteSimpleDbStoreHandler::make());
         $this->artisan('modules:db:init');
 
         //test
@@ -66,10 +64,14 @@ class StoreHandlersTest extends LaravelModulesTestCase
         $this->assertTrue(TestModule::isEnabled());
         $this->assertEquals(1, count(Modules::enabled()));
         $this->assertEquals(0, count(Modules::disabled()));
+        TestModule::disableModule();
+        $this->assertTrue(TestModule::isDisabled());
+        $this->assertFalse(TestModule::isEnabled());
+        $this->assertEquals(0, count(Modules::enabled()));
+        $this->assertEquals(1, count(Modules::disabled()));
 
         //clean up
         static::rm($this->appPath('/database.sqlite'));
-
     }
 
 }

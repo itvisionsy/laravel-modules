@@ -13,7 +13,7 @@ use Illuminate\Database\Connection;
 use ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface;
 use ItvisionSy\Laravel\Modules\Traits\StaticFactory;
 
-class SimpleDbStoreHandler implements KeyValueStoreInterface
+abstract class SimpleDbStoreHandler implements KeyValueStoreInterface
 {
 
     use StaticFactory;
@@ -49,16 +49,13 @@ class SimpleDbStoreHandler implements KeyValueStoreInterface
         return static::getConnection()->select($query, $bindings);
     }
 
-    public function set($key, $value = null)
-    {
-        return $this->statement("INSERT OR REPLACE INTO `" . static::$tableName . "` (`key`,`value`) VALUES ('" . addslashes($key) . "','" . addslashes($value) . "')");
-    }
+    abstract public function set($key, $value = null);
 
     public function get($key, $default = null)
     {
         $result = $this->select("SELECT `value` FROM `" . static::$tableName . "` WHERE `key`='" . addslashes($key) . "'");
         if (count($result)) {
-            return $result[0]->value;
+            return unserialize($result[0]->value);
         }
         return $default;
     }

@@ -9,7 +9,6 @@
 
 namespace ItvisionSy\Laravel\Modules;
 
-use Artisan;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use ItvisionSy\Laravel\Modules\Commands\InitiateDatabaseTable;
 use ItvisionSy\Laravel\Modules\Commands\MakeModule;
