@@ -92,6 +92,7 @@ class GenericTest extends LaravelModulesTestCase {
         }
 
         //incorrect module class inheritence
+        $this->expectException(\Exception::class);
         file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test2" . DIRECTORY_SEPARATOR . "Module.php", "<?php namespace App\\Modules\\Test2; class Module { }");
         Modules::refreshModules();
         try {
