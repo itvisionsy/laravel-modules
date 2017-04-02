@@ -1,39 +1,39 @@
 {
-  "name": "itvisionsy/laravel-modules",
-  "description": "Laravel 5.1 library to allow modules structure. Each module can have its routes, controllers, views, config, ...",
-  "type": "library",
-  "keywords": [
-    "modules",
-    "laravel"
-  ],
-  "require": {
-    "php": ">=5.5.9",
-    "laravel/framework": "5.1.*",
-    "nette/reflection": "^2.4"
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Muhannad Shelleh",
-      "email": "muhannad.shelleh@gmail.com"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "ItvisionSy\\Laravel\\Modules\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "classmap": [
-      "tests/LaravelModulesTestCase.php"
+    "name": "itvisionsy/laravel-modules",
+    "description": "Laravel 5.1 library to allow modules structure. Each module can have its routes, controllers, views, config, ...",
+    "type": "library",
+    "keywords": [
+        "modules",
+        "laravel"
     ],
-    "psr-4": {
-      "ItvisionSy\\Laravel\\Modules\\Tests\\": "tests/",
-      "App\\": "app/"
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.1.*",
+        "nette/reflection": "^2.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Muhannad Shelleh",
+            "email": "muhannad.shelleh@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ItvisionSy\\Laravel\\Modules\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/LaravelModulesTestCase.php"
+        ],
+        "psr-4": {
+            "ItvisionSy\\Laravel\\Modules\\Tests\\": "tests/",
+            "App\\": "app/"
+        }
+    },
+    "require-dev": {
+        "laravel/laravel": "^5.1",
+        "phpunit/phpunit": "^5.7"
     }
-  },
-  "require-dev": {
-    "laravel/laravel": "^5.1",
-    "phpunit/phpunit": "^5.7"
-  }
 }

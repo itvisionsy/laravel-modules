@@ -70,40 +70,6 @@ class StoreHandlersTest extends LaravelModulesTestCase {
         $this->assertEquals(0, count(Modules::enabled()));
         $this->assertEquals(1, count(Modules::disabled()));
 
-        //test module store
-        $this->artisan('make:module', ["id" => "Test3", "name" => "Test3 Module", "--url" => "test"]);
-        file_put_contents(rtrim(Modules::modulesDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "Test3" . DIRECTORY_SEPARATOR . "Module.php", <<<'PHP'
-<?php
-
-namespace App\Modules\Test3;
-
-use ItvisionSy\Laravel\Modules\Module as BaseModule;
-
-class Module extends BaseModule
-{
-
-    static protected $moduleId='Test3';
-    static protected $moduleName='Test3 Module';
-    static protected $moduleRouteNamePrefix='test';
-    static protected $moduleUrlPrefix='test';
-
-    public static function valueSet($value){
-        static::setStoreValue('testing',$value);
-    }
-
-    public static function valueGet(){
-        return static::getStoreValue('testing');
-    }
-
-}
-PHP
-        );
-        $this->loadModuleFiles("Test3");
-        Modules::enableModule(new \App\Modules\Test3\Module());
-        Modules::refreshModules();
-        \App\Modules\Test3\Module::valueSet(123);
-        $this->assertEquals(123, \App\Modules\Test3\Module::valueGet());
-
         //clean up
         static::rm($this->appPath('/database.sqlite'));
     }
