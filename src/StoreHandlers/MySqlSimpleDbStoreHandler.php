@@ -9,9 +9,8 @@ namespace ItvisionSy\Laravel\Modules\StoreHandlers;
  */
 class MySqlSimpleDbStoreHandler extends SimpleDbStoreHandler {
 
-    public function set($key, $value = null)
-    {
-        return $this->statement("REPLACE INTO `" . static::$tableName . "` (`key`,`value`) VALUES ('" . addslashes($key) . "','" . addslashes($value) . "')");
+    public function set($key, $value = null) {
+        return $this->statement("REPLACE INTO `" . static::$tableName . "` (`key`,`value`) VALUES ('" . addslashes($key) . "','" . addslashes(serialize($value)) . "')");
     }
 
 }

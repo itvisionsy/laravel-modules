@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Muhannad Shelleh <muhannad.shelleh@live.com>
@@ -13,16 +14,16 @@ use ErrorException;
 use Exception;
 use ItvisionSy\Laravel\Modules\Interfaces\KeyValueStoreInterface;
 use ItvisionSy\Laravel\Modules\Interfaces\StaticAndInstanceAccessInterface;
-use ItvisionSy\Laravel\Modules\StoreHandlers\SimpleDbStoreHandler;
+use ItvisionSy\Laravel\Modules\StoreHandlers\DummyStoreHandler;
 use ItvisionSy\Laravel\Modules\Traits\StaticAndInstanceAccessTrait;
 use SplFileInfo;
+use Nette\Reflection\AnnotationsParser;
 
 /**
  * Class Modules
  * @package App\Modules
  */
-class Modules implements StaticAndInstanceAccessInterface
-{
+class Modules implements StaticAndInstanceAccessInterface {
 
     use StaticAndInstanceAccessTrait;
 
@@ -30,28 +31,23 @@ class Modules implements StaticAndInstanceAccessInterface
     protected static $filtered = [];
     protected static $storeHandler;
 
-    public static function grantAccess()
-    {
-        return [
-            'get', 'all', 'find', 'enabled', 'disabled', 'getStoreHandler', 'setStoreHandler', 'setStoredValue', 'getStoredValue'
-        ];
+    public static function grantAccess() {
+        return ['setStoredValue', 'getStoredValue'];
     }
 
     /**
      * @param Module $module
      * @return mixed
      */
-    public static function isModuleEnabled(Module $module)
-    {
-        return (bool)@static::getStoredValue("module_is_enabled|" . $module->id(), config('modules.modules_enabled_by_default', 0));
+    public static function isModuleEnabled(Module $module) {
+        return (bool) @static::getStoredValue("module_is_enabled|" . $module->id(), config('modules.modules_enabled_by_default', 0));
     }
 
     /**
      * @param Module $module
      * @return mixed
      */
-    public static function disableModule(Module $module)
-    {
+    public static function disableModule(Module $module) {
         static::setStoredValue("module_is_enabled|" . $module->id(), 0);
         if (array_key_exists($module->id(), static::$filtered['enabled'])) {
             unset(static::$filtered['enabled'][$module->id()]);
@@ -63,8 +59,7 @@ class Modules implements StaticAndInstanceAccessInterface
      * @param Module $module
      * @return mixed
      */
-    public static function enableModule(Module $module)
-    {
+    public static function enableModule(Module $module) {
         static::setStoredValue("module_is_enabled|" . $module->id(), 1);
         if (array_key_exists($module->id(), static::$filtered['disabled'])) {
             unset(static::$filtered['disabled'][$module->id()]);
@@ -78,8 +73,7 @@ class Modules implements StaticAndInstanceAccessInterface
      * @param Module $module
      * @return mixed
      */
-    protected static function getStoredValue($key, $default = null, Module $module = null)
-    {
+    protected static function getStoredValue($key, $default = null, Module $module = null) {
         return static::getStoreHandler()->get(($module ? $module->id() : config("modules.store_public_prefix_key", "modules")) . '|' . $key, $default);
     }
 
@@ -89,8 +83,7 @@ class Modules implements StaticAndInstanceAccessInterface
      * @param Module $module
      * @return mixed
      */
-    protected static function setStoredValue($key, $value = null, Module $module = null)
-    {
+    protected static function setStoredValue($key, $value = null, Module $module = null) {
         return static::getStoreHandler()->set(($module ? $module->id() : config("modules.store_public_prefix_key", "modules")) . '|' . $key, $value);
     }
 
@@ -98,12 +91,11 @@ class Modules implements StaticAndInstanceAccessInterface
      * @return KeyValueStoreInterface
      * @throws ErrorException
      */
-    protected static function getStoreHandler()
-    {
+    public static function getStoreHandler() {
         if (!static::$storeHandler) {
             $handler = config('modules.store_handler');
             if (!$handler) {
-                $handler = SimpleDbStoreHandler::class;
+                $handler = DummyStoreHandler::class;
             }
             if (is_callable($handler)) {
                 $handler = $handler();
@@ -122,8 +114,7 @@ class Modules implements StaticAndInstanceAccessInterface
     /**
      * @param KeyValueStoreInterface $handler
      */
-    protected static function setStoreHandler(KeyValueStoreInterface $handler)
-    {
+    public static function setStoreHandler(KeyValueStoreInterface $handler) {
         static::$storeHandler = $handler;
     }
 
@@ -132,9 +123,8 @@ class Modules implements StaticAndInstanceAccessInterface
      * @return Module
      * @throws Exception
      */
-    protected function get($key)
-    {
-        $module = @$this->all()[$key];
+    public static function get($key) {
+        $module = @static::all()[$key];
         if ($module) {
             return $module;
         }
@@ -144,8 +134,7 @@ class Modules implements StaticAndInstanceAccessInterface
     /**
      * @return array
      */
-    protected function refreshModules()
-    {
+    public static function refreshModules() {
         $modules = [];
         $filtered = [
             'enabled' => [],
@@ -166,23 +155,28 @@ class Modules implements StaticAndInstanceAccessInterface
                 if (!$moduleClassFile->isFile()) {
                     continue;
                 }
+
+                //get defined class
+                $classes = AnnotationsParser::parsePhp(file_get_contents($moduleClassFile));
+
                 //namespace of the base module path
                 $moduleNamespace = rtrim(static::modulesNamespace(), "\\") . "\\" . $fileInfo->getFilename();
                 //module class full name
                 $moduleClassName = $moduleNamespace . "\\" . ltrim(static::moduleClassName(), "\\");
-                try {
-                    //try the Module name
-                    $module = new $moduleClassName();
-                    if (!$module instanceof Module) {
-                        continue;
-                    }
-                } catch (Exception $e) {
+
+                //if file is not defining a module
+                if (!array_key_exists(ltrim($moduleClassName, "\\"), $classes)) {
+                    continue;
+                }
+
+                //check class extends module base class
+                $module = new $moduleClassName();
+                if (!$module instanceof Module) {
                     continue;
                 }
 
                 //module exists and is valid
                 /** @var Module $module */
-
                 //add the module
                 $modules[$module->id()] = $module;
 
@@ -202,53 +196,46 @@ class Modules implements StaticAndInstanceAccessInterface
     /**
      * @return Module[]|array
      */
-    protected function all()
-    {
-        return static::$modules ?: $this->refreshModules();
+    public static function all() {
+        return static::$modules ?: static::refreshModules();
     }
 
     /**
      * @return Module[]|array
      */
-    protected function enabled()
-    {
-        $this->all();
+    public static function enabled() {
+        static::all();
         return @static::$filtered['enabled'] ?: [];
     }
 
     /**
      * @return Module[]|array
      */
-    protected function disabled()
-    {
-        $this->all();
+    public static function disabled() {
+        static::all();
         return @static::$filtered['disabled'] ?: [];
     }
 
     /**
      * @return string
      */
-    public static function modulesDirectory()
-    {
+    public static function modulesDirectory() {
         return config('modules.directory', app_path('Modules'));
     }
 
     /**
      * @return string
      */
-    public static function modulesNamespace()
-    {
+    public static function modulesNamespace() {
         return config('modules.namespace', '\\App\\Modules');
     }
 
     /**
      * @return mixed
      */
-    public static function moduleClassName()
-    {
+    public static function moduleClassName() {
         return config('modules.class_name', 'Module');
     }
 
     //@TODO:Move store handler methods to separate class ModulesStoreHandler to maintain single responsibility
-
 }

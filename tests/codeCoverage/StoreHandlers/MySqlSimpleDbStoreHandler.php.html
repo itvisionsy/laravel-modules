@@ -67,7 +67,7 @@
        </div>
 </td>
       <td class="danger small"><div align="right">0.00%</div></td>
-      <td class="danger small"><div align="right">0&nbsp;/&nbsp;3</div></td>
+      <td class="danger small"><div align="right">0&nbsp;/&nbsp;2</div></td>
      </tr>
 
      <tr>
@@ -96,7 +96,7 @@
        </div>
 </td>
       <td class="danger small"><div align="right">0.00%</div></td>
-      <td class="danger small"><div align="right">0&nbsp;/&nbsp;3</div></td>
+      <td class="danger small"><div align="right">0&nbsp;/&nbsp;2</div></td>
      </tr>
 
      <tr>
@@ -117,7 +117,7 @@
        </div>
 </td>
       <td class="danger small"><div align="right">0.00%</div></td>
-      <td class="danger small"><div align="right">0&nbsp;/&nbsp;3</div></td>
+      <td class="danger small"><div align="right">0&nbsp;/&nbsp;2</div></td>
      </tr>
 
 
@@ -136,12 +136,11 @@
      <tr><td><div align="right"><a name="9"></a><a href="#9">9</a></div></td><td class="codeLine"><span class="comment">&nbsp;*/</span></td></tr>
      <tr><td><div align="right"><a name="10"></a><a href="#10">10</a></div></td><td class="codeLine"><span class="keyword">class</span><span class="default">&nbsp;</span><span class="default">MySqlSimpleDbStoreHandler</span><span class="default">&nbsp;</span><span class="keyword">extends</span><span class="default">&nbsp;</span><span class="default">SimpleDbStoreHandler</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
      <tr><td><div align="right"><a name="11"></a><a href="#11">11</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="12"></a><a href="#12">12</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">public</span><span class="default">&nbsp;</span><span class="keyword">function</span><span class="default">&nbsp;</span><span class="default">set</span><span class="keyword">(</span><span class="default">$key</span><span class="keyword">,</span><span class="default">&nbsp;</span><span class="default">$value</span><span class="default">&nbsp;</span><span class="keyword">=</span><span class="default">&nbsp;</span><span class="default">null</span><span class="keyword">)</span></td></tr>
-     <tr class="danger"><td><div align="right"><a name="13"></a><a href="#13">13</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">{</span></td></tr>
-     <tr class="danger"><td><div align="right"><a name="14"></a><a href="#14">14</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">return</span><span class="default">&nbsp;</span><span class="default">$this</span><span class="default">-&gt;</span><span class="default">statement</span><span class="keyword">(</span><span class="default">&quot;REPLACE&nbsp;INTO&nbsp;`&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="keyword">static</span><span class="default">::</span><span class="default">$tableName</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;`&nbsp;(`key`,`value`)&nbsp;VALUES&nbsp;('&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">addslashes</span><span class="keyword">(</span><span class="default">$key</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;','&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">addslashes</span><span class="keyword">(</span><span class="default">$value</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;')&quot;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
-     <tr class="danger"><td><div align="right"><a name="15"></a><a href="#15">15</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
-     <tr><td><div align="right"><a name="16"></a><a href="#16">16</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="17"></a><a href="#17">17</a></div></td><td class="codeLine"><span class="keyword">}</span></td></tr>
+     <tr><td><div align="right"><a name="12"></a><a href="#12">12</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">public</span><span class="default">&nbsp;</span><span class="keyword">function</span><span class="default">&nbsp;</span><span class="default">set</span><span class="keyword">(</span><span class="default">$key</span><span class="keyword">,</span><span class="default">&nbsp;</span><span class="default">$value</span><span class="default">&nbsp;</span><span class="keyword">=</span><span class="default">&nbsp;</span><span class="default">null</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
+     <tr class="danger"><td><div align="right"><a name="13"></a><a href="#13">13</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">return</span><span class="default">&nbsp;</span><span class="default">$this</span><span class="default">-&gt;</span><span class="default">statement</span><span class="keyword">(</span><span class="default">&quot;REPLACE&nbsp;INTO&nbsp;`&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="keyword">static</span><span class="default">::</span><span class="default">$tableName</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;`&nbsp;(`key`,`value`)&nbsp;VALUES&nbsp;('&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">addslashes</span><span class="keyword">(</span><span class="default">$key</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;','&quot;</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">addslashes</span><span class="keyword">(</span><span class="default">serialize</span><span class="keyword">(</span><span class="default">$value</span><span class="keyword">)</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">.</span><span class="default">&nbsp;</span><span class="default">&quot;')&quot;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+     <tr class="danger"><td><div align="right"><a name="14"></a><a href="#14">14</a></div></td><td class="codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
+     <tr><td><div align="right"><a name="15"></a><a href="#15">15</a></div></td><td class="codeLine"></td></tr>
+     <tr><td><div align="right"><a name="16"></a><a href="#16">16</a></div></td><td class="codeLine"><span class="keyword">}</span></td></tr>
 
     </tbody>
    </table>
@@ -154,7 +153,7 @@
      <span class="warning"><strong>Dead Code</strong></span>
     </p>
     <p>
-     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 4.0.7</a> using <a href="https://secure.php.net/" target="_top">PHP 5.6.29</a> with <a href="https://xdebug.org/">Xdebug 2.2.5</a> and <a href="https://phpunit.de/">PHPUnit 5.7.16</a> at Sat Apr 1 15:39:35 UTC 2017.</small>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 4.0.7</a> using <a href="https://secure.php.net/" target="_top">PHP 5.6.29</a> with <a href="https://xdebug.org/">Xdebug 2.2.5</a> and <a href="https://phpunit.de/">PHPUnit 5.7.16</a> at Sun Apr 2 7:07:20 UTC 2017.</small>
     </p>
     <a title="Back to the top" id="toplink" href="#"><span class="glyphicon glyphicon-arrow-up"></span></a>
    </footer>

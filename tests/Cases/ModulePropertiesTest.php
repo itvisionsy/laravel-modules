@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Muhannad Shelleh <muhannad.shelleh@live.com>
@@ -10,11 +11,9 @@ namespace ItvisionSy\Laravel\Modules\Tests\Cases;
 
 use ItvisionSy\Laravel\Modules\Tests\LaravelModulesTestCase;
 
-class ModulePropertiesTest extends LaravelModulesTestCase
-{
+class ModulePropertiesTest extends LaravelModulesTestCase {
 
-    public function testModuleProperties()
-    {
+    public function testModuleProperties() {
         $this->artisan('make:module', ["id" => "Test", "name" => "Test Module"]);
         $this->loadModuleFiles("Test");
         $module = \App\Modules\Test\Module::make();
@@ -22,6 +21,6 @@ class ModulePropertiesTest extends LaravelModulesTestCase
         $this->assertEquals('Test Module', $module->name());
         $this->assertEquals('test', $module->urlPrefix());
         $this->assertEquals('test', $module->routePrefix());
-
     }
+
 }

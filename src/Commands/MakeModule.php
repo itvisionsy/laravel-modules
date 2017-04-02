@@ -5,8 +5,7 @@ namespace ItvisionSy\Laravel\Modules\Commands;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Filesystem\Filesystem;
 
-class MakeModule extends \Illuminate\Console\Command implements SelfHandling
-{
+class MakeModule extends \Illuminate\Console\Command implements SelfHandling {
 
     protected $signature = 'make:module
                                 {id : the ID of the module. Should be unique across modules}
@@ -24,8 +23,7 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling
      * Create a new command instance.
      * @param Filesystem $fileSystem
      */
-    public function __construct(Filesystem $fileSystem)
-    {
+    public function __construct(Filesystem $fileSystem) {
         parent::__construct();
         $this->fileSystem = $fileSystem;
     }
@@ -35,8 +33,7 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling
      *
      * @return void
      */
-    public function handle()
-    {
+    public function handle() {
         //input
         $id = $this->argument('id');
         $name = $this->argument('name');
@@ -67,25 +64,22 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling
         $this->copyStub("index.blade.php.stub", "{$path}Views{$ds}index.blade.php", $stubData + []);
 
         $this->info("Module {$id} has been created in {$path}");
-
     }
 
-    protected function makeDirectory($path, $mode = 0777)
-    {
+    protected function makeDirectory($path, $mode = 0777) {
         if (!$this->fileSystem->isDirectory($path)) {
             $this->fileSystem->makeDirectory($path, $mode, true, true);
         }
     }
 
-    protected function copyStub($stubName, $filePath, array $values)
-    {
+    protected function copyStub($stubName, $filePath, array $values) {
         $path = __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'MakeModule' . DIRECTORY_SEPARATOR . $stubName;
         $content = preg_replace_callback("/\{\{([a-zA-Z_\-]+)\}\}/", function ($matches) use ($values) {
             return $values[$matches[1]];
         }, file_get_contents($path));
-        if ($this->fileSystem->exists($filePath)) {
-            $this->fileSystem->delete($filePath);
+        if (!$this->fileSystem->exists($filePath)) {
+            $this->fileSystem->put($filePath, $content);
         }
-        $this->fileSystem->put($filePath, $content);
     }
+
 }
