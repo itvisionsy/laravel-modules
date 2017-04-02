@@ -170,8 +170,12 @@ class Modules implements StaticAndInstanceAccessInterface {
                 }
 
                 //check class extends module base class
-                $module = new $moduleClassName();
-                if (!$module instanceof Module) {
+                try {
+                    $module = new $moduleClassName();
+                    if (!$module instanceof Module) {
+                        continue;
+                    }
+                } catch (Exception $e) {
                     continue;
                 }
 
