@@ -9,7 +9,7 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling {
 
     protected $signature = 'make:module
                                 {id : the ID of the module. Should be unique across modules}
-                                {name : the display name of the module}
+                                {name? : the display name of the module}
                                 {--url= : the URL/route-names part for the module}
                                 ';
     protected $description = 'Makes a new module';
@@ -36,7 +36,7 @@ class MakeModule extends \Illuminate\Console\Command implements SelfHandling {
     public function handle() {
         //input
         $id = $this->argument('id');
-        $name = $this->argument('name');
+        $name = $this->argument('name') ? : $id;
         $url = $this->option('url') ?: str_slug($id);
 
         //subs

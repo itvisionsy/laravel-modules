@@ -48,10 +48,10 @@ Your module controllers (by default go into the `Http/Controllers` folder) shoul
 ## Creating Modules
 To create a new module, you can use the artisan command
 ```
-php artisan modules:make {id} {name} [--url={url}]
+php artisan modules:make {id} [{name}] [--url={url}]
 ```
-Values of `id`, `name`, and `url` are strings, and the URL part is optional and will be used to generate make the
-  URLs of the module more human friendly.
+Values of `id`, `name`, and `url` are strings. The name and URL parts are optional. URL will be used to generate the
+  URLs of the module more human friendly. Name is used for human identification and readability only.
 
 This command will create the basic folder structure inside the modules folder, along with the base module and a sample
 routes (inside `Http/routes.php`), controller (inside `Http/Controllers/`), and view (inside `Views`).

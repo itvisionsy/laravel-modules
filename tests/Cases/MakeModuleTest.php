@@ -26,6 +26,14 @@ class MakeModuleTest extends LaravelModulesTestCase
         $this->assertEquals(\App\Modules\Test\Module::make()->routePrefix(), "test");
     }
 
+    public function testDefaultValues()
+    {
+        $this->artisan('make:module', ["id" => "Test2"]);
+        $this->loadModuleFiles("Test2");
+        $this->assertEquals(\App\Modules\Test2\Module::make()->id(), "Test2");
+        $this->assertEquals(\App\Modules\Test2\Module::make()->name(), "Test2");
+    }
+
     public function testCompoundName()
     {
         $this->artisan('make:module', ["id" => "TestModule", "name" => "Test Module"]);
